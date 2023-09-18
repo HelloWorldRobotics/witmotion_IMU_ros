@@ -1,13 +1,13 @@
 witmotion:
   ros__parameters:
-    port: ttyUSB0
-    baud_rate: 9600 # baud
-    polling_interval: 50 # ms
+    port: tars_imu_gps
+    baud_rate: 230400 # baud
+    polling_interval: 5 # ms
     timeout_ms: 150 # ms
     restart_service_name: /restart_imu
     imu_publisher:
-      topic_name: /imu
-      frame_id: imu
+      topic_name: /wit/imu
+      frame_id: imu_link
       use_native_orientation: false
       measurements:
         acceleration:
@@ -20,7 +20,7 @@ witmotion:
           enabled: true
           covariance: [0.0190, 0.0, 0.0, 0.0, 0.0120, 0.0, 0.0, 0.0, 0.0107]
     temperature_publisher:
-      enabled: true
+      enabled: false
       topic_name: /temperature
       frame_id: base_link
       from_message: magnetometer # acceleration, angular_vel, orientation, magnetometer
@@ -28,7 +28,7 @@ witmotion:
       coefficient: 1.0 # Linear calibration parameters: coefficient
       addition: 0.0 # and addendum
     magnetometer_publisher:
-      enabled: true
+      enabled: false
       topic_name: /magnetometer
       frame_id: imu
       coefficient: 0.00000001 # Linear calibration parameters: coefficient
@@ -36,29 +36,29 @@ witmotion:
       covariance:
         [0.000000187123, 0.0, 0.0, 0.0, 0.000000105373, 0.0, 0.0, 0.0, 0.000000165816]
     barometer_publisher:
-      enabled: true
+      enabled: false
       topic_name: /barometer
       frame_id: base_link
       variance: 0.001
       coefficient: 1.0 # Linear calibration parameters: coefficient
       addition: 0.0 # and addendum
     altimeter_publisher:
-      enabled: true
+      enabled: false
       topic_name: /altitude
       coefficient: 1.0 # Linear calibration parameters: coefficient
       addition: 0.0 # and addendum
     orientation_publisher:
-      enabled: true
+      enabled: false
       topic_name: /orientation
     gps_publisher:
-      enabled: false
-      navsat_fix_frame_id: world
-      navsat_fix_topic_name: /gps
-      navsat_altitude_topic_name: /gps_altitude
-      navsat_satellites_topic_name: /gps_satellites
-      navsat_variance_topic_name: /gps_variance
-      ground_speed_topic_name: /gps_ground_speed
-    rtc_publisher:
       enabled: true
+      navsat_fix_frame_id: gps_link
+      navsat_fix_topic_name: /wit/location
+      navsat_altitude_topic_name: /wit/gps_altitude
+      navsat_satellites_topic_name: /wit/gps_satellites
+      navsat_variance_topic_name: /wit/gps_variance
+      ground_speed_topic_name: /wit/gps_ground_speed
+    rtc_publisher:
+      enabled: false
       topic_name: /witmotion_clock
-      presync: true
+      presync: false
